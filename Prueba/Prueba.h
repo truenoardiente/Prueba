@@ -3,6 +3,8 @@
 
 #define CM_PRUEBA 100
 #define CM_SALIR 101
+#define CM_DIALOGO 102
+#define TEXTO 103
 
 
 

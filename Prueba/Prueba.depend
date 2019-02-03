@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1549224910 source:c:\users\acer\documents\github\prueba\prueba\main.cpp
+1549226753 source:c:\users\acer\documents\github\prueba\prueba\main.cpp
 	<windows.h>
 	"Prueba.h"
 
-1549224930 c:\users\acer\documents\github\prueba\prueba\prueba.h
+1549225736 c:\users\acer\documents\github\prueba\prueba\prueba.h
 
-1549224910 source:c:\users\acer\documents\github\prueba\prueba\prueba.rc
+1549226043 source:c:\users\acer\documents\github\prueba\prueba\prueba.rc
+	<windows.h>
 	"Prueba.h"
 

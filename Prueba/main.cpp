@@ -1,8 +1,11 @@
 #include <windows.h>
+#include <iostream>
 #include "Prueba.h"
 
-LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+using namespace std;
 
+LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 //void InsertarMenu(HWND hwnd);
 
 int WINAPI WinMain(HINSTANCE  hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -58,11 +61,22 @@ int WINAPI WinMain(HINSTANCE  hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdP
 
 LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    static HINSTANCE hInstance;
+    static int veces=0;
+
     switch(msg)
     {
+    case WM_CREATE:
+        hInstance = ((LPCREATESTRUCT)lParam)->hInstance;
+        return 0;
+        break;
     case WM_COMMAND:
         switch(LOWORD(wParam))
         {
+        case CM_DIALOGO:
+            veces++;
+            DialogBoxParam(hInstance, "DialogoPrueba", hwnd, DialogProc, veces);
+            break;
         case CM_PRUEBA:
             MessageBox(hwnd, "Comando: Prueba", "Mensaje de menú", MB_OK);
             break;
@@ -80,6 +94,24 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     }
     return 0;
 }
+
+BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    char texto[25];
+
+    switch (msg)
+    {
+        case WM_INITDIALOG:
+            sprintf(texto, "Veces invocado: %d", lParam);
+            SetWindowText(GetDlgItem(hDlg, TEXTO), texto);
+            return TRUE;
+        case WM_COMMAND:
+            EndDialog(hDlg, FALSE);
+            return TRUE;
+    }
+    return TRUE;
+}
+
 
 /*void InsertarMenu(HWND hwnd)
 {

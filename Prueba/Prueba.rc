@@ -1,3 +1,4 @@
+#include <windows.h>
 #include "Prueba.h"
 
 Menu MENU
@@ -7,5 +8,20 @@ BEGIN
             MENUITEM "&Prueba", CM_PRUEBA
             MENUITEM SEPARATOR
             MENUITEM "&Salir", CM_SALIR
+            MENUITEM SEPARATOR
+            MENUITEM "&Diálogo", CM_DIALOGO
         END
+END
+
+DialogoPrueba DIALOG 0, 0 ,118, 48
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Dialogo de prueba"
+FONT 8, "Helv"
+BEGIN
+    CONTROL "Mensaje de prueba", TEXTO, "static",
+        SS_LEFT | WS_CHILD | WS_VISIBLE,
+        8, 9, 84, 8
+    CONTROL "Aceptar", IDOK, "button",
+    BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
+    56, 26, 50, 14
 END
