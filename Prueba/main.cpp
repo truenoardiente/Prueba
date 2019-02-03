@@ -1,17 +1,16 @@
 #include <windows.h>
+#include "Prueba.h"
 
 LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-#define CM_PRUEBA 100
-#define CM_SAlIR 101
-
-void InsertarMenu(HWND hwnd);
+//void InsertarMenu(HWND hwnd);
 
 int WINAPI WinMain(HINSTANCE  hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
     HWND hwnd;
     MSG mensaje;
     WNDCLASSEX wincl;
+    HMENU hMenu;
 
     wincl.hInstance = hInstance;
     wincl.lpszClassName = "NUESTRA_CLASE";
@@ -44,7 +43,8 @@ int WINAPI WinMain(HINSTANCE  hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdP
             NULL
     );
 
-    InsertarMenu(hwnd);
+    hMenu = LoadMenu(hInstance,  "Menu");
+    SetMenu(hwnd, hMenu);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
 
     while(true == GetMessage(&mensaje, 0, 0, 0))
@@ -60,6 +60,18 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 {
     switch(msg)
     {
+    case WM_COMMAND:
+        switch(LOWORD(wParam))
+        {
+        case CM_PRUEBA:
+            MessageBox(hwnd, "Comando: Prueba", "Mensaje de menú", MB_OK);
+            break;
+        case CM_SALIR:
+            MessageBox(hwnd, "Comando: Salir", "Mensaje de menú", MB_OK);
+            PostQuitMessage(0);
+            break;
+        }
+        break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -69,7 +81,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return 0;
 }
 
-void InsertarMenu(HWND hwnd)
+/*void InsertarMenu(HWND hwnd)
 {
     HMENU hMenu1, hMenu2;
 
@@ -77,8 +89,9 @@ void InsertarMenu(HWND hwnd)
     hMenu2 = CreateMenu();
     AppendMenu(hMenu2, MF_STRING, CM_PRUEBA, "&Prueba");
     AppendMenu(hMenu2, MF_SEPARATOR, 0, NULL);
-    AppendMenu(hMenu2, MF_STRING, CM_SAlIR, "&Salir");
+    AppendMenu(hMenu2, MF_STRING, CM_SALIR, "&Salir");
 
     AppendMenu(hMenu1, MF_STRING | MF_POPUP, (UINT)hMenu2, "&Principal");
     SetMenu(hwnd, hMenu1);
 }
+*/
